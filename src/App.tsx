@@ -1,48 +1,16 @@
 import AddTodoForm from "./components/AddTodoForm";
 import TodoSummary from "./components/TodoSummary";
 import TodoList from "./components/TodoList";
-import { useEffect, useState } from "react";
-import TodoItemType from "./types/TodoItemType";
+import useTodoList from "./hooks/useTodoList";
 
 function App() {
-  const [todoList, setTodoList] = useState<TodoItemType[]>(
-    JSON.parse(localStorage.getItem("todoList") || "[]")
-  );
-
-  useEffect(() => {
-    localStorage.setItem("todoList", JSON.stringify(todoList));
-  }, [todoList]);
-
-  function addTodoItem(title: string) {
-    setTodoList((prevTodoList) => [
-      {
-        id: Date.now(),
-        title,
-        isCompleted: false,
-      },
-      ...prevTodoList,
-    ]);
-  }
-
-  function setTodoItemCompleted(id: number, isCompleted: boolean) {
-    setTodoList((prevTodoList) =>
-      prevTodoList.map((todoItem) =>
-        todoItem.id == id ? { ...todoItem, isCompleted } : todoItem
-      )
-    );
-  }
-
-  function deleteTodoItem(id: number) {
-    setTodoList((prevTodoList) =>
-      prevTodoList.filter((todoItem) => todoItem.id !== id)
-    );
-  }
-
-  function deleteAllCompletedTodoItems() {
-    setTodoList((prevTodoList) =>
-      prevTodoList.filter((todoItem) => !todoItem.isCompleted)
-    );
-  }
+  const {
+    todoList,
+    addTodoItem,
+    setTodoItemCompleted,
+    deleteTodoItem,
+    deleteAllCompletedTodoItems,
+  } = useTodoList();
 
   return (
     <div className="flex flex-col items-center p-8 space-y-8 h-screen overflow-auto">
