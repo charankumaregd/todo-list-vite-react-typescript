@@ -1,9 +1,11 @@
 import { NotebookPen, Trash2 } from "lucide-react";
-import sampleTodoList from "../data/sampleTodoList";
+import TodoItem from "../types/TodoItem";
 
-export default function TodoList() {
-  const todoList = sampleTodoList;
+interface TodoListProps {
+  todoList: TodoItem[];
+}
 
+export default function TodoList({ todoList }: TodoListProps) {
   return todoList.length === 0 ? (
     <div className="flex flex-col items-center p-4 space-y-2 text-gray-400 text-sm font-semibold">
       <NotebookPen size="1.2rem" />
