@@ -1,33 +1,40 @@
-import { NotebookPen, Trash2 } from "lucide-react";
-import TodoItem from "../types/TodoItem";
+import { NotebookPen } from "lucide-react";
+import TodoItemType from "../types/TodoItemType";
+import TodoItem from "./TodoItem";
 
 interface TodoListProps {
-  todoList: TodoItem[];
+  todoList: TodoItemType[];
+  onTodoItemCompleted: (id: number, isCompleted: boolean) => void;
+  onDeleteTodoItem: (id: number) => void;
 }
 
-export default function TodoList({ todoList }: TodoListProps) {
+export default function TodoList({
+  todoList,
+  onTodoItemCompleted,
+  onDeleteTodoItem,
+}: TodoListProps) {
+  const sortedTodoList = todoList.sort((a, b) => {
+    if (a.isCompleted === b.isCompleted) {
+      return a.id - b.id;
+    }
+    return a.isCompleted ? 1 : -1;
+  });
+
   return todoList.length === 0 ? (
-    <div className="flex flex-col items-center p-4 space-y-2 text-gray-400 text-sm font-semibold">
-      <NotebookPen size="1.2rem" />
+    <div className="flex flex-col items-center p-4 space-y-2 text-gray-400">
+      <NotebookPen />
       <span>Your Todos will appear here.</span>
     </div>
   ) : (
     <ul className="space-y-4">
-      {todoList.map((todo) => {
+      {sortedTodoList.map((todoItem) => {
         return (
-          <li key={todo.id} className="flex space-x-4">
-            <label className="px-4 py-2 bg-white grow rounded-md space-x-2 border border-gray-300">
-              <input type="checkbox" className="scale-125" />
-              <span
-                className={todo.isCompleted ? "line-through text-gray-400" : ""}
-              >
-                {todo.title}
-              </span>
-            </label>
-            <button className="px-2 text-gray-400 hover:text-gray-500">
-              <Trash2 />
-            </button>
-          </li>
+          <TodoItem
+            key={todoItem.id}
+            todoItem={todoItem}
+            onTodoItemCompleted={onTodoItemCompleted}
+            onDeleteTodoItem={onDeleteTodoItem}
+          />
         );
       })}
     </ul>
