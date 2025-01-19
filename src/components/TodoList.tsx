@@ -21,7 +21,7 @@ export default function TodoList({
   });
 
   return todoList.length === 0 ? (
-    <div className="flex flex-col items-center p-4 space-y-2 text-gray-400">
+    <div className="flex flex-col items-center p-8 space-y-2 text-slate-400">
       <NotebookPen />
       <span>Your Todos will appear here.</span>
     </div>

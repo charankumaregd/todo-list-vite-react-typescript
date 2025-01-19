@@ -12,9 +12,9 @@ export default function TodoSummary({
   const completedTodoList = todoList.filter((todoItem) => todoItem.isCompleted);
 
   return (
-    <div className="flex justify-between text-sm font-medium">
+    <div className="flex justify-between text-sm font-medium space-x-8">
       <p>
-        {completedTodoList.length}/{todoList.length} todos completed
+        {completedTodoList.length}/{todoList.length} Todos completed
       </p>
       {completedTodoList.length > 0 && (
         <button
